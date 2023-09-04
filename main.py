@@ -35,11 +35,14 @@ def predict_rub_salary_sj(vacancy):
 def get_hh_vacancies(language):
     hh_url = "https://api.hh.ru/vacancies/"
     vacancies = []
+    developer_id = 96
+    moscow_area = "1"
+    publication_period = 30
     for page in count(0):
         payload = {
-            "professional_role" : 96,
-            "area": "1",
-            "period": 30,
+            "professional_role" : developer_id,
+            "area": moscow_area,
+            "period": publication_period,
             "text": "Программист {}".format(language),
             "only_with_salary": True,
             "page": page,
@@ -79,11 +82,13 @@ def get_sj_vacancies(language):
     url = "https://api.superjob.ru/2.0/vacancies/"
     headers = {"X-Api-App-Id": super_job_token}
     vacancies = []
+    moscow_id = 4
+    developer_id = 48
     for page in count(0):
         payload = {
-            "town": 4,
+            "town": moscow_id,
             "keyword": "Программист {}".format(language),
-            "catalogues": 48,
+            "catalogues": developer_id,
             "page": page,
             "count": 100,
         }
