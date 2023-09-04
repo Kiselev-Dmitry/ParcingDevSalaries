@@ -79,9 +79,7 @@ def get_statistics_hh(vacancies):
     }
 
 
-def get_sj_vacancies(language):
-    load_dotenv()
-    super_job_token = os.environ["SUPER_JOB_TOKEN"]
+def get_sj_vacancies(language, super_job_token):
     url = "https://api.superjob.ru/2.0/vacancies/"
     headers = {"X-Api-App-Id": super_job_token}
     vacancies = []
@@ -161,6 +159,9 @@ if __name__ == "__main__":
         "Go"
     ]
 
+    load_dotenv()
+    super_job_token = os.environ["SUPER_JOB_TOKEN"]
+
     statistics_per_language_hh = {}
     for language in languages:
         vacancies = get_hh_vacancies(language)
@@ -170,7 +171,7 @@ if __name__ == "__main__":
 
     statistics_per_language_sj = {}
     for language in languages:
-        vacancies = get_sj_vacancies(language)
+        vacancies = get_sj_vacancies(language, super_job_token)
         if vacancies:
             statistics_per_language_sj[language] = get_statistics_sj(vacancies)
     print(return_beautiful_table(statistics_per_language_sj, "SuperJob Moscow"))
