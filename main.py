@@ -68,7 +68,10 @@ def get_statistics_hh(vacancies):
         sum_salary = sum_salary + predicted_salary
     vacancies_found = len(vacancies)
     vacancies_processed = vacancies_found-wrong_currency
-    language_avr_salary = int(sum_salary/vacancies_processed)
+    try:
+        language_avr_salary = int(sum_salary/vacancies_processed)
+    except ZeroDivisionError:
+        language_avr_salary = 0
     return {
         "vacancies_found": vacancies_found,
         "vacancies_processed": vacancies_processed,
@@ -112,7 +115,10 @@ def get_statistics_sj(vacancies):
         sum_salary = sum_salary + predicted_salary
     vacancies_found = len(vacancies)
     vacancies_processed = vacancies_found - wrong_currency
-    language_avr_salary = int(sum_salary / vacancies_processed)
+    try:
+        language_avr_salary = int(sum_salary / vacancies_processed)
+    except ZeroDivisionError:
+        language_avr_salary = 0
     return {
         "vacancies_found": vacancies_found,
         "vacancies_processed": vacancies_processed,
