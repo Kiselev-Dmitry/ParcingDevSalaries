@@ -57,7 +57,7 @@ def get_hh_vacancies(language):
     return vacancies
 
 
-def get_language_data_hh(vacancies):
+def get_statistics_hh(vacancies):
     wrong_currency = 0
     sum_salary = 0
     for index, vacancy in enumerate(vacancies):
@@ -101,7 +101,7 @@ def get_sj_vacancies(language):
     return vacancies
 
 
-def get_language_data_sj(vacancies):
+def get_statistics_sj(vacancies):
     wrong_currency = 0
     sum_salary = 0
     for index, vacancy in enumerate(vacancies):
@@ -159,12 +159,12 @@ if __name__ == "__main__":
     for language in languages:
         vacancies = get_hh_vacancies(language)
         if vacancies:
-            statistics_per_language_hh[language] = get_language_data_hh(vacancies)
+            statistics_per_language_hh[language] = get_statistics_hh(vacancies)
     print(return_beautiful_table(statistics_per_language_hh, "HeadHunter Moscow"))
 
     statistics_per_language_sj = {}
     for language in languages:
         vacancies = get_sj_vacancies(language)
         if vacancies:
-            statistics_per_language_sj[language] = get_language_data_sj(vacancies)
+            statistics_per_language_sj[language] = get_statistics_sj(vacancies)
     print(return_beautiful_table(statistics_per_language_sj, "SuperJob Moscow"))
