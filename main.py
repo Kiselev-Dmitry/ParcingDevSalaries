@@ -6,9 +6,9 @@ from terminaltables import AsciiTable
 
 
 def predict_salary(salary_from, salary_to):
-    if salary_from is None:
+    if not salary_from:
         predicted_salary = 0.8 * salary_to
-    elif salary_to is None:
+    elif not salary_to:
         predicted_salary = 1.2 * salary_from
     else:
         predicted_salary = 0.5 * (salary_from + salary_to)
@@ -62,7 +62,7 @@ def get_statistics_hh(vacancies):
     sum_salary = 0
     for index, vacancy in enumerate(vacancies):
         predicted_salary = predict_rub_salary_hh(vacancy)
-        if predicted_salary is None:
+        if not predicted_salary:
             wrong_currency += 1
             continue
         sum_salary = sum_salary + predicted_salary
@@ -106,7 +106,7 @@ def get_statistics_sj(vacancies):
     sum_salary = 0
     for index, vacancy in enumerate(vacancies):
         predicted_salary = predict_rub_salary_sj(vacancy)
-        if predicted_salary is None:
+        if not predicted_salary:
             wrong_currency += 1
             continue
         sum_salary = sum_salary + predicted_salary
