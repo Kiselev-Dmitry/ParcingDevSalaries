@@ -116,7 +116,7 @@ def get_language_data_sj(vacancies):
 
 
 def return_beautiful_table(statistics, title):
-    table_data = [
+    table_header = [
         (
             "Язык программирования",
             "Найдено вакансий",
@@ -125,16 +125,16 @@ def return_beautiful_table(statistics, title):
         )
     ]
     for language in statistics:
-        info = statistics[language]
-        table_data.append(
+        language_statistics = statistics[language]
+        table_header.append(
             (
                 language,
-                info["vacancies_found"],
-                info["vacancies_processed"],
-                info["average_salary"]
+                language_statistics["vacancies_found"],
+                language_statistics["vacancies_processed"],
+                language_statistics["average_salary"]
             )
         )
-    table_instance = AsciiTable(table_data, title)
+    table_instance = AsciiTable(table_header, title)
     return table_instance.table
 
 
@@ -150,16 +150,16 @@ if __name__ == "__main__":
         "Go"
     ]
 
-    languages_datas_hh = {}
+    statistics_per_language_hh = {}
     for language in languages:
         vacancies = get_hh_vacancies(language)
         if vacancies:
-            languages_datas_hh[language] = get_language_data_hh(vacancies)
-    print(return_beautiful_table(languages_datas_hh, "HeadHunter Moscow"))
+            statistics_per_language_hh[language] = get_language_data_hh(vacancies)
+    print(return_beautiful_table(statistics_per_language_hh, "HeadHunter Moscow"))
 
-    languages_datas_sj = {}
+    statistics_per_language_sj = {}
     for language in languages:
         vacancies = get_sj_vacancies(language)
         if vacancies:
-            languages_datas_sj[language] = get_language_data_sj(vacancies)
-    print(return_beautiful_table(languages_datas_sj, "SuperJob Moscow"))
+            statistics_per_language_sj[language] = get_language_data_sj(vacancies)
+    print(return_beautiful_table(statistics_per_language_sj, "SuperJob Moscow"))
