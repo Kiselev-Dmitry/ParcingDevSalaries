@@ -66,7 +66,7 @@ def get_statistics_hh(vacancies):
             wrong_currency += 1
             continue
         sum_salary = sum_salary + predicted_salary
-    vacancies_found = index+1
+    vacancies_found = len(vacancies)
     vacancies_processed = vacancies_found-wrong_currency
     language_avr_salary = int(sum_salary/vacancies_processed)
     return {
@@ -110,7 +110,7 @@ def get_statistics_sj(vacancies):
             wrong_currency += 1
             continue
         sum_salary = sum_salary + predicted_salary
-    vacancies_found = index + 1
+    vacancies_found = len(vacancies)
     vacancies_processed = vacancies_found - wrong_currency
     language_avr_salary = int(sum_salary / vacancies_processed)
     return {
