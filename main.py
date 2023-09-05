@@ -57,10 +57,10 @@ def get_hh_vacancies(language):
         vacancies = vacancies + hh_reply["items"]
         if page >= hh_reply["pages"] or page == max_pages:
             break
-    return vacancies
+    return vacancies, hh_reply["found"]
 
 
-def get_statistics_hh(vacancies):
+def get_statistics_hh(vacancies, vacancies_found):
     salary_sum = 0
     vacancies_processed = 0
     for vacancy in vacancies:
@@ -69,7 +69,6 @@ def get_statistics_hh(vacancies):
             vacancies_processed += 1
             salary_sum = salary_sum + predicted_salary
             continue
-    vacancies_found = len(vacancies)
     try:
         language_avr_salary = int(salary_sum/vacancies_processed)
     except ZeroDivisionError:
@@ -101,10 +100,10 @@ def get_sj_vacancies(language, super_job_token):
         vacancies = vacancies + sj_reply["objects"]
         if not sj_reply["more"]:
                 break
-    return vacancies
+    return vacancies, sj_reply["total"]
 
 
-def get_statistics_sj(vacancies):
+def get_statistics_sj(vacancies, vacancies_found):
     salary_sum = 0
     vacancies_processed = 0
     for index, vacancy in enumerate(vacancies):
@@ -113,7 +112,6 @@ def get_statistics_sj(vacancies):
             vacancies_processed += 1
             salary_sum = salary_sum + predicted_salary
             continue
-    vacancies_found = len(vacancies)
     try:
         language_avr_salary = int(salary_sum / vacancies_processed)
     except ZeroDivisionError:
@@ -165,14 +163,14 @@ if __name__ == "__main__":
 
     statistics_per_language_hh = {}
     for language in languages:
-        vacancies = get_hh_vacancies(language)
+        vacancies, vacancies_found = get_hh_vacancies(language)
         if vacancies:
-            statistics_per_language_hh[language] = get_statistics_hh(vacancies)
+            statistics_per_language_hh[language] = get_statistics_hh(vacancies, vacancies_found)
     print(return_beautiful_table(statistics_per_language_hh, "HeadHunter Moscow"))
 
     statistics_per_language_sj = {}
     for language in languages:
-        vacancies = get_sj_vacancies(language, super_job_token)
+        vacancies, vacancies_found = get_sj_vacancies(language, super_job_token)
         if vacancies:
-            statistics_per_language_sj[language] = get_statistics_sj(vacancies)
+            statistics_per_language_sj[language] = get_statistics_sj(vacancies, vacancies_found)
     print(return_beautiful_table(statistics_per_language_sj, "SuperJob Moscow"))
