@@ -61,16 +61,15 @@ def get_hh_vacancies(language):
 
 
 def get_statistics_hh(vacancies):
-    wrong_currency = 0
     sum_salary = 0
-    for index, vacancy in enumerate(vacancies):
+    vacancies_processed = 0
+    for vacancy in vacancies:
         predicted_salary = predict_rub_salary_hh(vacancy)
-        if not predicted_salary:
-            wrong_currency += 1
+        if predicted_salary:
+            vacancies_processed += 1
+            sum_salary = sum_salary + predicted_salary
             continue
-        sum_salary = sum_salary + predicted_salary
     vacancies_found = len(vacancies)
-    vacancies_processed = vacancies_found-wrong_currency
     try:
         language_avr_salary = int(sum_salary/vacancies_processed)
     except ZeroDivisionError:
@@ -106,16 +105,15 @@ def get_sj_vacancies(language, super_job_token):
 
 
 def get_statistics_sj(vacancies):
-    wrong_currency = 0
     sum_salary = 0
+    vacancies_processed = 0
     for index, vacancy in enumerate(vacancies):
         predicted_salary = predict_rub_salary_sj(vacancy)
-        if not predicted_salary:
-            wrong_currency += 1
+        if predicted_salary:
+            vacancies_processed += 1
+            sum_salary = sum_salary + predicted_salary
             continue
-        sum_salary = sum_salary + predicted_salary
     vacancies_found = len(vacancies)
-    vacancies_processed = vacancies_found - wrong_currency
     try:
         language_avr_salary = int(sum_salary / vacancies_processed)
     except ZeroDivisionError:
