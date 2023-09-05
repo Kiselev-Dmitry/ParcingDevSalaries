@@ -17,10 +17,13 @@ def predict_salary(salary_from, salary_to):
 
 def predict_rub_salary_hh(vacancy):
     salary = vacancy["salary"]
-    salary_from = salary["from"]
-    salary_to = salary["to"]
-    currency = salary["currency"]
-    if currency == "RUR":
+    try:
+        salary_from = salary["from"]
+        salary_to = salary["to"]
+        currency = salary["currency"]
+    except TypeError:
+        return
+    if currency == "RUR" and (salary_from or salary_to):
         return predict_salary(salary_from, salary_to)
 
 
@@ -38,13 +41,13 @@ def get_hh_vacancies(language):
     developer_id = 96
     moscow_area = "1"
     publication_period = 30
+    max_pages = 19
     for page in count(0):
         payload = {
             "professional_role" : developer_id,
             "area": moscow_area,
             "period": publication_period,
             "text": "Программист {}".format(language),
-            "only_with_salary": True,
             "page": page,
             "per_page": 100
         }
@@ -52,7 +55,7 @@ def get_hh_vacancies(language):
         response.raise_for_status()
         hh_reply = response.json()
         vacancies = vacancies + hh_reply["items"]
-        if page >= hh_reply["pages"]:
+        if page >= hh_reply["pages"] or page == max_pages:
             break
     return vacancies
 
